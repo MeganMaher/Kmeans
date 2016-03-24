@@ -24,6 +24,8 @@ public class Kmeans{
 
         km.printClusters(c, k);
 
+        km.printDescription(km.finalCentroids, k, inst, c);
+
         km.printOutliers(inst, c, km.finalCentroids, k);
     }
 
@@ -34,7 +36,7 @@ public class Kmeans{
 
         /* Initialize min array */
         for (int i = 0; i < min.length; i++) {
-            min[i] = Integer.MAX_VALUE;
+            min[i] = Double.MAX_VALUE;
         }
 
         /* Get max and mins */
@@ -61,7 +63,7 @@ public class Kmeans{
     }
 
     public void printOutliers(double[][] inst, int[] cluster, double[][] centroids, int k) {
-        System.out.println("---- Outliers ----");
+        System.out.println("\n---- Outliers ----");
         for (int j = 0; j < k; j++) {
             int fartherst_instance = -1;
             double farthest_value = 0;
@@ -150,7 +152,7 @@ public class Kmeans{
 //		double[][] centroids=new double[k][d];
 		int[] cnt=new int[k];
 
-        int[][] sums = new int[k][d];
+        double[][] sums = new double[k][d];
 		//use cnt to count the number of instances in each cluster
 		//for each cluster
         for (int c = 0; c < k; c++) {
@@ -230,7 +232,7 @@ public class Kmeans{
     }
 
     public void printClusters(int[] clusters, int k) {
-        System.out.println("---- Clusters ----");
+        System.out.println("\n---- Clusters ----");
         for (int j = 0; j < k; j++) {
             System.out.print(j + ": [");
 
@@ -246,6 +248,86 @@ public class Kmeans{
                 System.out.println(" ]");
             }
         }
+    }
+
+    public void printDescription(double [][]centroids, int k, double[][] init, int[] clusters) {
+
+        System.out.println("\n---- Description ----");
+        double[] averages = new double[init[0].length];
+
+        for (int c = 0; c < init[0].length; c++) {
+            double sum = 0;
+
+            for (int r = 0; r < init.length; r++) {
+                sum += init[r][c];
+            }
+
+            averages[c] = sum / init.length;
+        }
+
+
+        for (int c = 0; c < k; c++) {
+            System.out.println("Cluster " + c + ": ");
+
+            if (centroids[c][0] == 0) {
+                System.out.println("\t-- Empty Cluster --");
+                continue;
+            }
+
+            for (int col = 0; col < centroids[0].length; col++) {
+
+                String columnName = getColName(col);
+
+                System.out.print("\t" + columnName + ": \t");
+                double val = centroids[c][col];
+                double avg = averages[col];
+
+//                System.out.print(val + "; \t" + "Avg: \t" + avg + ", Diff: \t" + (val - avg));
+                System.out.printf("%05f; \tAvg: %05f, \tDiff: %05f", val, avg, (val-avg));
+                System.out.println();
+            }
+
+            System.out.println();
+            System.out.print("\t");
+            for (int col = 0; col < centroids[0].length; col++) {
+                double val = centroids[c][col];
+                double avg = averages[col];
+                double diff = val - avg;
+                double thresh = .3 * avg;
+                String columnName = getColName(col);
+
+                if (diff > thresh) {
+                    System.out.print("High " + columnName + " ");
+                } else if (diff < thresh) {
+                    System.out.print("Low " + columnName + " ");
+                }
+            }
+            System.out.println();
+        }
+    }
+
+    private String getColName(int colNum) {
+        String columnName = "";
+        switch (colNum) {
+            case 0:
+                columnName = "Age   ";
+                break;
+            case 1:
+                columnName = "Height";
+                break;
+            case 2:
+                columnName = "Weight";
+                break;
+            case 3:
+                columnName = "Dash  ";
+                break;
+            case 4:
+                columnName = "Bench ";
+                break;
+            default: return "";
+        }
+
+        return columnName;
     }
 
 	//reads in the file - no modifications necessary
