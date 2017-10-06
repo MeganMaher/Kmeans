@@ -16,8 +16,6 @@ public class Kmeans{
         inst = km.normalizeData(inst);
 
         int[] c=km.cluster(inst,k);
-//		for(int i=0; i<inst.length; i++)
-//			System.out.println(i+"\t"+c[i]);
 
         System.out.println("\n--- Centroids ---");
         km.printMatrix(km.finalCentroids);
@@ -149,7 +147,6 @@ public class Kmeans{
 
 	public double[][] recalcCentroids(double[][] inst, int[] clusters, int k){
 		int n=inst.length, d=inst[0].length;
-//		double[][] centroids=new double[k][d];
 		int[] cnt=new int[k];
 
         double[][] sums = new double[k][d];
