@@ -147,7 +147,6 @@ public class Kmeans{
 
 	public double[][] recalcCentroids(double[][] inst, int[] clusters, int k){
 		int n=inst.length, d=inst[0].length;
-//		double[][] centroids=new double[k][d];
 		int[] cnt=new int[k];
 
         double[][] sums = new double[k][d];
