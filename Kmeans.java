@@ -279,7 +279,6 @@ public class Kmeans{
                 double val = centroids[c][col];
                 double avg = averages[col];
 
-//                System.out.print(val + "; \t" + "Avg: \t" + avg + ", Diff: \t" + (val - avg));
                 System.out.printf("%05f; \tAvg: %05f, \tDiff: %05f", val, avg, (val-avg));
                 System.out.println();
             }
