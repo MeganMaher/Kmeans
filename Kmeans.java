@@ -126,20 +126,20 @@ public class Kmeans{
 		int[] rtn=new int[n];
 		//for each instance
 		for(int i = 0; i < n; i++) {
-            //calculate the distance to each of the different centroids
-            double min_distance = Double.MAX_VALUE;
-            int closest_centroid = 0;
-            for (int c = 0; c < k; c++) {
-                double dist = euclid(inst[i], centroids[c]);
-                if (dist < min_distance) {
-                    min_distance = dist;
-                    closest_centroid = c;
-                }
-            }
+            		//calculate the distance to each of the different centroids
+            		double min_distance = Double.MAX_VALUE;
+            		int closest_centroid = 0;
+            		for (int c = 0; c < k; c++) {
+                		double dist = euclid(inst[i], centroids[c]);
+                		if (dist < min_distance) {
+                   			min_distance = dist;
+                   		 	closest_centroid = c;
+               			 }
+            		}
 
-            //and assign it to the cluster with the lowest distance
-            rtn[i] = closest_centroid;
-        }
+           		 //and assign it to the cluster with the lowest distance
+		    	rtn[i] = closest_centroid;
+       		 }
 
         return rtn;
 	}
